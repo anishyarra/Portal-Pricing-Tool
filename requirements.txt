@@ -1,0 +1,8 @@
+playwright
+playwright-stealth
+requests
+beautifulsoup4
+selenium
+undetected-chromedriver
+openai
+
