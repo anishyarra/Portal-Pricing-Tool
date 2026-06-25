@@ -1,6 +1,22 @@
 # Portal Pricing Tool
 
-Extract pricing and product information from McMaster-Carr using AI-guided search.
+An LLM-driven browser agent that autonomously navigates McMaster-Carr to find part numbers and extract live pricing, specs, and availability — turning a vague product description into clean structured data (CSV/JSON).
+
+McMaster-Carr has no public API and aggressive bot detection. This tool drives a real Chrome browser with **GPT-4 Vision in the loop**: the model "sees" each page, decides what to search and where to click, and walks the catalog like a person until it lands on the right part — then extracts the pricing table.
+
+## What it does
+
+- **Name → part number** — give it `"shallow female-threaded anchors"`; it searches, reasons over the results, and returns the catalog part number(s).
+- **Part number → pricing** — batch-extract unit price, price breaks (5 / 20 units), availability, and MPN for a list of parts.
+- **Structured output** — every run is saved to CSV + JSON, with step-by-step screenshots.
+
+## How it works
+
+- **Vision agent loop** (`llm_guided_search.py`) — screenshots the page, GPT-4 Vision chooses the next action (search / click / scroll), iterating until it reaches the target product.
+- **Resilient automation** — Selenium + `undetected-chromedriver` to operate a site that actively blocks bots.
+- **Extraction layer** (`mcmaster_pricing.py`, `batch_extract.py`) — parses price tables and product data into normalized records.
+
+**Stack:** Python · OpenAI GPT-4 Vision · Selenium · undetected-chromedriver
 
 ## Quick Start
 
